@@ -1,0 +1,253 @@
+<html>
+<head>
+<link rel='stylesheet' href='https://app.scribbler.live/codemirror/codemirror.css'>
+<link rel='stylesheet' href='https://app.scribbler.live/codemirror/cobalt.css'>
+<link rel='stylesheet' href='https://app.scribbler.live/codemirror/duotone-light.css'>
+<link rel='stylesheet' href='https://app.scribbler.live/codemirror/show-hint.css'>
+<link rel='stylesheet' href='https://app.scribbler.live/css/pico.min.css'>
+<link rel='stylesheet' href='https://app.scribbler.live/css/style.css'>
+<title>New JSNB:Scribbler Notebook</title>
+</head>
+<body>
+<br>
+<div class="container">
+
+<script>
+(function() {
+  document.title = "Modern Roadmap with Car Animation";
+
+  // Create header
+  const header = document.createElement('h1');
+  header.textContent = "Your Roadmap to Success";
+  document.body.appendChild(header);
+
+  // Input for goal
+  const label = document.createElement('label');
+  label.setAttribute('for', 'goal');
+  label.textContent = "Enter Your Goal: ";
+  document.body.appendChild(label);
+
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.id = 'goal';
+  document.body.appendChild(input);
+
+  // Generate roadmap button
+  const button = document.createElement('button');
+  button.textContent = 'Generate Roadmap';
+  button.onclick = generateRoadmap;
+  document.body.appendChild(button);
+
+  // Roadmap container
+  const roadmapDiv = document.createElement('div');
+  roadmapDiv.id = 'roadmap';
+  document.body.appendChild(roadmapDiv);
+
+  // Function to generate the roadmap
+  async function generateRoadmap() {
+    const goal = document.getElementById("goal").value.trim().toLowerCase();
+    if (!goal) {
+      alert('Please enter a goal');
+      return;
+    }
+
+    // Get task-oriented milestones based on the goal
+    const milestones = await getMilestones(goal);
+
+    // If no milestones found, show an error
+    if (!milestones) {
+      alert('No roadmap available for this goal. Please enter a valid profession (Teacher, Doctor, Software Engineer).');
+      return;
+    }
+
+    // Display the roadmap
+    visualizeRoadmap(milestones);
+  }
+
+  // Get milestones based on the user's goal
+  async function getMilestones(goal) {
+    if (goal.includes("software engineer")) {
+      return [
+        "Learn Programming Basics",
+        "Study Data Structures & Algorithms",
+        "Build Projects",
+        "Contribute to Open Source",
+        "Prepare for Interviews",
+        "Land Your First Job"
+      ];
+    } else if (goal.includes("doctor")) {
+      return [
+        "Complete High School with Science Focus",
+        "Pursue Medical College",
+        "Complete Clinical Internship",
+        "Pass Medical Licensing Exam",
+        "Choose Specialization",
+        "Start Practicing Medicine"
+      ];
+    } else if (goal.includes("teacher")) {
+      return [
+        "Complete a Bachelor's Degree in Education",
+        "Gain Teaching Certification",
+        "Practice Teaching in Classrooms",
+        "Obtain a Master's Degree (optional)",
+        "Start Teaching",
+        "Advance Your Career (e.g., Principal, Educational Consultant)"
+      ];
+    } else {
+      return null;  // No milestones for unrecognized goals
+    }
+  }
+
+  // Visualize the roadmap with a car
+  function visualizeRoadmap(milestones) {
+    const roadmapContainer = document.getElementById("roadmap");
+    roadmapContainer.innerHTML = '';  // Clear previous roadmap
+
+    // Create the road with dotted line
+    const road = document.createElement('div');
+    road.id = 'road';
+    roadmapContainer.appendChild(road);
+
+    // Create a car element (using the car emoji 🚗)
+    const car = document.createElement('span');
+    car.id = 'car';
+    car.textContent = '🚗'; // Car emoji
+    car.style.transform = 'scaleX(-1)'; // Flip the car emoji horizontally to make it face forward
+    road.appendChild(car);
+
+    // Create milestones along the road
+    milestones.forEach((milestone, index) => {
+      const milestoneElement = document.createElement("div");
+      milestoneElement.className = "milestone";
+      milestoneElement.textContent = milestone;
+
+      // Position milestones along the road
+      milestoneElement.style.top = `${(index + 1) * 80}px`;  // Corrected line using template literals
+      milestoneElement.onclick = function () {
+        milestoneElement.classList.add("completed");
+        moveCar(index, milestones, car, road); // Start moving the car when the milestone is clicked
+      };
+      road.appendChild(milestoneElement);
+    });
+  }
+
+  // Move the car forward when a milestone is clicked and leave the screen after the last milestone
+  function moveCar(index, milestones, car, road) {
+    let position = parseInt(car.style.left || '0');  // Initialize the position
+    const targetPosition = index * 150 + 50; // position of the milestone clicked
+
+    const interval = setInterval(() => {
+      if (position < targetPosition) {
+        position += 5; // Move the car forward
+        car.style.left = `${position}px`;  // Corrected line using template literals
+      }
+
+      // Mark milestones as completed when the car passes them
+      for (let i = 0; i <= index; i++) {
+        document.querySelectorAll('.milestone')[i].classList.add("completed");
+      }
+
+      // If it's the last milestone, continue moving the car towards the end
+      if (position >= targetPosition && index === milestones.length - 1) {
+        position += 5; // Continue moving the car towards the end of the road
+        car.style.left = `${position}px`;  // Corrected line using template literals
+
+        // Once car reaches the end, stop the car
+        if (position >= road.offsetWidth - 80) {
+          clearInterval(interval); // Stop the car at the end
+        }
+      }
+    }, 30);
+  }
+
+  // Styling the page with a beautiful design
+  const style = document.createElement('style');
+  style.textContent = `
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      text-align: center;
+      background: #f8f9fa;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      color: #333;
+      font-weight: bold;
+    }
+    input, button {
+      padding: 12px 20px;
+      font-size: 1.2em;
+      margin: 10px;
+      border-radius: 30px;
+      border: 2px solid #ddd;
+      background-color: #fff;
+      color: #333;
+      transition: all 0.3s ease;
+    }
+    button {
+      background-color: #007bff;
+      color: #fff;
+      border-color: #007bff;
+    }
+    button:hover {
+      background-color: #0056b3;
+      border-color: #0056b3;
+    }
+    #roadmap {
+      position: relative;
+      width: 80%;
+      margin: 20px auto;
+      height: 350px;
+      background-color: #e9ecef;
+      border-radius: 25px;
+      padding: 20px;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+    #road {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: #343a40;
+      border-radius: 15px;
+      display: flex;
+      justify-content: space-evenly;
+      flex-direction: column;
+      overflow: hidden;
+      border-top: 3px dotted white; /* Dotted line effect */
+    }
+    #car {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      font-size: 40px;
+      transition: left 0.3s ease-in-out;
+    }
+    .milestone {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 12px 24px;
+      background-color: #ffffff;
+      color: #007bff;
+      border-radius: 20px;
+      font-size: 1.1em;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.4s, transform 0.4s;
+      cursor: pointer;
+    }
+    .milestone.completed {
+      background-color: #28a745;
+      color: white;
+      transform: scale(1.1);
+    }
+  `;
+  document.head.appendChild(style);
+})();
+
+</script>
+
+<article ondblclick="sandbox.toggleEditor(0)" style="display:flex" id="result0"><p class="status" id="status0"></p> <div class="output" id="output0"></div></article></div></body></html>

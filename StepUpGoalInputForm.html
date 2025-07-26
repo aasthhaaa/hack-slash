@@ -1,0 +1,220 @@
+<html>
+<head>
+<link rel='stylesheet' href='https://app.scribbler.live/codemirror/codemirror.css'>
+<link rel='stylesheet' href='https://app.scribbler.live/codemirror/cobalt.css'>
+<link rel='stylesheet' href='https://app.scribbler.live/codemirror/duotone-light.css'>
+<link rel='stylesheet' href='https://app.scribbler.live/codemirror/show-hint.css'>
+<link rel='stylesheet' href='https://app.scribbler.live/css/pico.min.css'>
+<link rel='stylesheet' href='https://app.scribbler.live/css/style.css'>
+<title>New JSNB:Scribbler Notebook</title>
+</head>
+<body>
+<br>
+<div class="container">
+
+<script>
+// Clear previous content and set up the new scene
+document.body.innerHTML = "";
+
+// Notebook-Style Background
+document.body.style.background = "linear-gradient(white 90%, #f1f1f1 10%)";
+document.body.style.backgroundSize = "100% 30px";
+document.body.style.backgroundColor = "#fff";
+document.body.style.fontFamily = "'Arial', sans-serif";
+document.body.style.display = "flex";
+document.body.style.justifyContent = "center";
+document.body.style.alignItems = "center";
+document.body.style.height = "100vh";
+document.body.style.margin = "0";
+
+// Container for Form with Pastel Gradient Background
+const container = document.createElement("div");
+container.style.width = "300px";
+container.style.padding = "30px";
+container.style.background = "linear-gradient(to bottom right, #FFB3C1, #C2D6FF)"; // Pastel gradient background
+container.style.borderRadius = "15px";
+container.style.boxShadow = "0px 4px 10px rgba(0, 0, 0, 0.1)";
+container.style.textAlign = "center";
+container.style.color = "#333333";
+document.body.appendChild(container);
+
+// Title Container with Icon
+const titleContainer = document.createElement("div");
+titleContainer.style.display = "flex";
+titleContainer.style.alignItems = "center";
+titleContainer.style.justifyContent = "center";
+titleContainer.style.gap = "10px";
+titleContainer.style.marginBottom = "20px";
+container.appendChild(titleContainer);
+
+// Title "StepUp" with Calm Blue Color
+const title = document.createElement("h1");
+title.textContent = "StepUp";
+title.style.color = "#3B82F6";
+title.style.fontWeight = "bold";
+title.style.fontSize = "24px";
+title.style.fontStyle = "italic";
+titleContainer.appendChild(title);
+
+// Staircase Icon to the Right of the Title
+const staircaseIcon = document.createElement("img");
+staircaseIcon.src = "https://cdn-icons-png.flaticon.com/512/3039/3039458.png"; // Staircase icon URL
+staircaseIcon.alt = "Staircase Icon";
+staircaseIcon.style.width = "20px";
+staircaseIcon.style.height = "20px";
+titleContainer.appendChild(staircaseIcon);
+
+// Form Section with Rounded Input Boxes and Shadows
+const form = document.createElement("form");
+
+// Input for Name with Black Font and White Background
+const inputName = document.createElement("input");
+inputName.placeholder = "Enter Your Name";
+inputName.style.width = "100%";
+inputName.style.marginBottom = "15px";
+inputName.style.padding = "12px";
+inputName.style.border = "2px solid #ccc"; // Light grey border
+inputName.style.borderRadius = "10px";
+inputName.style.boxShadow = "0px 2px 4px rgba(0, 0, 0, 0.1)";
+inputName.style.outline = "none";
+inputName.style.fontSize = "16px";
+inputName.style.color = "#000"; // Black font color
+inputName.style.backgroundColor = "#fff"; // White background
+form.appendChild(inputName);
+
+// Input for Age with Black Font and White Background
+const inputAge = document.createElement("input");
+inputAge.placeholder = "Enter Your Age";
+inputAge.style.width = "100%";
+inputAge.style.marginBottom = "15px";
+inputAge.style.padding = "12px";
+inputAge.style.border = "2px solid #ccc"; // Light grey border
+inputAge.style.borderRadius = "10px";
+inputAge.style.boxShadow = "0px 2px 4px rgba(0, 0, 0, 0.1)";
+inputAge.style.outline = "none";
+inputAge.style.fontSize = "16px";
+inputAge.style.color = "#000"; // Black font color
+inputAge.style.backgroundColor = "#fff"; // White background
+form.appendChild(inputAge);
+
+// Next Button with Hover Effect
+const nextButton = document.createElement("button");
+nextButton.textContent = "Next";
+nextButton.style.width = "100%";
+nextButton.style.padding = "12px";
+nextButton.style.marginTop = "15px";
+nextButton.style.backgroundColor = "#3B82F6";
+nextButton.style.color = "#ffffff";
+nextButton.style.border = "none";
+nextButton.style.borderRadius = "10px";
+nextButton.style.fontSize = "16px";
+nextButton.style.cursor = "pointer";
+nextButton.style.boxShadow = "0px 4px 6px rgba(59, 130, 246, 0.4)";
+nextButton.style.transition = "background-color 0.3s ease, box-shadow 0.3s ease";
+nextButton.onmouseover = () => {
+    nextButton.style.backgroundColor = "#2563EB";
+    nextButton.style.boxShadow = "0px 6px 8px rgba(59, 130, 246, 0.5)";
+};
+nextButton.onmouseout = () => {
+    nextButton.style.backgroundColor = "#3B82F6";
+    nextButton.style.boxShadow = "0px 4px 6px rgba(59, 130, 246, 0.4)";
+};
+form.appendChild(nextButton);
+
+container.appendChild(form);
+
+// Event Listener for the Form
+nextButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    const name = inputName.value;
+    const age = inputAge.value;
+
+    if (name && age) {
+        startGoalScreen(name, age);
+    } else {
+        alert("Please enter both your name and age.");
+    }
+});
+
+// Function for the Goal Input Screen with Similar Styles
+function startGoalScreen(name, age) {
+    // Clear previous content
+    document.body.innerHTML = "";
+
+    // Page 2: Goal Section with Similar Styling
+    const goalContainer = document.createElement("div");
+    goalContainer.style.width = "300px";
+    goalContainer.style.padding = "30px";
+    goalContainer.style.background = "linear-gradient(to bottom right, #FFB3C1, #C2D6FF)"; // Pastel gradient background
+    goalContainer.style.borderRadius = "15px";
+    goalContainer.style.boxShadow = "0px 4px 10px rgba(0, 0, 0, 0.1)";
+    goalContainer.style.textAlign = "center";
+    goalContainer.style.color = "#333333";
+    goalContainer.style.margin = "0 auto";
+    goalContainer.style.marginTop = "20vh";
+    document.body.appendChild(goalContainer);
+
+    const goalHeading = document.createElement("h1");
+    goalHeading.textContent = "Enter Your Goal";
+    goalHeading.style.color = "#3B82F6";
+    goalHeading.style.fontSize = "24px";
+    goalContainer.appendChild(goalHeading);
+
+    const goalForm = document.createElement("form");
+
+    // Input for Goal with White Background
+    const inputGoal = document.createElement("input");
+    inputGoal.placeholder = "Enter Your Goal (e.g., Master ML)";
+    inputGoal.style.width = "100%";
+    inputGoal.style.marginBottom = "15px";
+    inputGoal.style.padding = "12px";
+    inputGoal.style.border = "2px solid #ccc"; // Light grey border
+    inputGoal.style.borderRadius = "10px";
+    inputGoal.style.boxShadow = "0px 2px 4px rgba(0, 0, 0, 0.1)";
+    inputGoal.style.outline = "none";
+    inputGoal.style.fontSize = "16px";
+    inputGoal.style.color = "#000"; // Black font color
+    inputGoal.style.backgroundColor = "#fff"; // White background
+    goalForm.appendChild(inputGoal);
+
+    const submitButton = document.createElement("button");
+    submitButton.textContent = "Submit";
+    submitButton.style.width = "100%";
+    submitButton.style.padding = "12px";
+    submitButton.style.marginTop = "15px";
+    submitButton.style.backgroundColor = "#3B82F6";
+    submitButton.style.color = "#ffffff";
+    submitButton.style.border = "none";
+    submitButton.style.borderRadius = "10px";
+    submitButton.style.fontSize = "16px";
+    submitButton.style.cursor = "pointer";
+    submitButton.style.boxShadow = "0px 4px 6px rgba(59, 130, 246, 0.4)";
+    submitButton.style.transition = "background-color 0.3s ease, box-shadow 0.3s ease";
+    submitButton.onmouseover = () => {
+        submitButton.style.backgroundColor = "#2563EB";
+        submitButton.style.boxShadow = "0px 6px 8px rgba(59, 130, 246, 0.5)";
+    };
+    submitButton.onmouseout = () => {
+        submitButton.style.backgroundColor = "#3B82F6";
+        submitButton.style.boxShadow = "0px 4px 6px rgba(59, 130, 246, 0.4)";
+    };
+    goalForm.appendChild(submitButton);
+
+    goalContainer.appendChild(goalForm);
+
+    // Event Listener for the Goal Form
+    submitButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        const goal = inputGoal.value;
+
+        if (goal) {
+            alert(`You are all set, ${name}! Your goal is to: ${goal}`);
+
+        } else {
+            alert("Please enter your goal.");
+        }
+    });
+}
+</script>
+
+<article ondblclick="sandbox.toggleEditor(0)" style="display:flex" id="result0"><p class="status" id="status0"></p> <div class="output" id="output0"></div></article></div></body></html>

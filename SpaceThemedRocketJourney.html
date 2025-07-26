@@ -1,0 +1,210 @@
+<html>
+<head>
+<link rel='stylesheet' href='https://app.scribbler.live/codemirror/codemirror.css'>
+<link rel='stylesheet' href='https://app.scribbler.live/codemirror/cobalt.css'>
+<link rel='stylesheet' href='https://app.scribbler.live/codemirror/duotone-light.css'>
+<link rel='stylesheet' href='https://app.scribbler.live/codemirror/show-hint.css'>
+<link rel='stylesheet' href='https://app.scribbler.live/css/pico.min.css'>
+<link rel='stylesheet' href='https://app.scribbler.live/css/style.css'>
+<title>New JSNB:Scribbler Notebook</title>
+</head>
+<body>
+<br>
+<div class="container">
+
+<script>
+// Clear the existing content
+document.body.innerHTML = "";
+
+// Setting up the space background with stars
+document.body.style.background = "url('https://source.unsplash.com/1600x900/?space,stars') no-repeat center center fixed";
+document.body.style.backgroundSize = "cover";
+document.body.style.color = "#ffffff";
+document.body.style.fontFamily = "'Arial', sans-serif";
+document.body.style.overflow = "hidden";
+document.body.style.position = "relative";
+
+// Add small random stars to the background
+function createStars() {
+    const numStars = 100; // Number of small stars
+    for (let i = 0; i < numStars; i++) {
+        const star = document.createElement('div');
+        star.style.position = "absolute";
+        star.style.backgroundColor = "#ffffff";
+        star.style.borderRadius = "50%";
+        star.style.opacity = Math.random(); // Random opacity for star brightness
+        const size = Math.random() * 3 + 1; // Random size for stars between 1px and 4px
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        star.style.left = `${Math.random() * 100}vw`;
+        star.style.top = `${Math.random() * 100}vh`;
+        document.body.appendChild(star);
+    }
+}
+
+createStars();
+
+// Creating the roadmap container
+const roadmapContainer = document.createElement("div");
+roadmapContainer.style.position = "relative";
+roadmapContainer.style.width = "100%";
+roadmapContainer.style.height = "100vh";
+document.body.appendChild(roadmapContainer);
+
+// Earth (Starting point)
+const earth = document.createElement("div");
+earth.style.position = "absolute";
+earth.style.left = "50px";
+earth.style.bottom = "20px";
+earth.innerHTML = `<svg width="100" height="100">
+    <circle cx="50" cy="50" r="40" fill="#00aaff" stroke="white" stroke-width="5" />
+</svg>`;
+roadmapContainer.appendChild(earth);
+
+// Star (Goal)
+const star = document.createElement("div");
+star.style.position = "absolute";
+star.style.right = "50px";
+star.style.top = "20px";
+star.innerHTML = `<svg width="80" height="80">
+    <polygon points="40,5 50,35 80,35 55,55 65,85 40,65 15,85 25,55 0,35 30,35" fill="#ffd700" stroke="white" stroke-width="5" />
+</svg>`;
+roadmapContainer.appendChild(star);
+
+// Meteors (Milestones)
+const meteor1 = document.createElement("div");
+meteor1.style.position = "absolute";
+meteor1.style.left = "30%";
+meteor1.style.top = "30%";
+meteor1.innerHTML = `<svg width="50" height="50">
+    <circle cx="25" cy="25" r="20" fill="#ff6347" stroke="white" stroke-width="5" />
+</svg>`;
+roadmapContainer.appendChild(meteor1);
+
+const meteor2 = document.createElement("div");
+meteor2.style.position = "absolute";
+meteor2.style.left = "60%";
+meteor2.style.top = "50%";
+meteor2.innerHTML = `<svg width="50" height="50">
+    <circle cx="25" cy="25" r="20" fill="#ff6347" stroke="white" stroke-width="5" />
+</svg>`;
+roadmapContainer.appendChild(meteor2);
+
+// Rocket (Using the rocket emoji 🚀)
+const rocket = document.createElement("div");
+rocket.style.position = "absolute";
+rocket.style.left = "80px";
+rocket.style.bottom = "100px";
+rocket.style.fontSize = "50px";
+rocket.style.transform = "translateY(10px)";
+rocket.textContent = "🚀";
+roadmapContainer.appendChild(rocket);
+
+// Task list (Notepad style with galaxy purple background)
+const taskContainer = document.createElement("div");
+taskContainer.style.position = "absolute";
+taskContainer.style.right = "20px";
+taskContainer.style.bottom = "20px";
+taskContainer.style.width = "220px";
+taskContainer.style.padding = "20px";
+taskContainer.style.background = "linear-gradient(135deg, #6a1b9a, #8e24aa)";
+taskContainer.style.color = "#000000";
+taskContainer.style.borderRadius = "10px";
+taskContainer.style.boxShadow = "0px 4px 10px rgba(0, 0, 0, 0.3)";
+taskContainer.style.fontFamily = "'Courier New', monospace";
+document.body.appendChild(taskContainer);
+
+// Title for tasks
+const taskTitle = document.createElement("h3");
+taskTitle.textContent = "Daily Tasks";
+taskTitle.style.marginBottom = "10px";
+taskTitle.style.color = "#ffffff";
+taskContainer.appendChild(taskTitle);
+
+// Input field for new tasks
+const taskInput = document.createElement("input");
+taskInput.type = "text";
+taskInput.placeholder = "Enter new task";
+taskInput.style.width = "100%";
+taskInput.style.padding = "10px";
+taskInput.style.marginBottom = "10px";
+taskContainer.appendChild(taskInput);
+
+// Button to add new tasks
+const addButton = document.createElement("button");
+addButton.textContent = "Add Task";
+addButton.style.width = "100%";
+addButton.style.padding = "10px";
+addButton.style.backgroundColor = "#8e24aa";
+addButton.style.color = "#ffffff";
+addButton.style.border = "none";
+addButton.style.borderRadius = "5px";
+addButton.style.cursor = "pointer";
+taskContainer.appendChild(addButton);
+
+// Task list
+const taskList = document.createElement("ul");
+taskContainer.appendChild(taskList);
+
+// Add task functionality
+addButton.addEventListener("click", () => {
+    const taskText = taskInput.value.trim();
+    if (taskText !== "") {
+        const taskItem = document.createElement("li");
+        taskItem.textContent = taskText;
+        taskItem.style.cursor = "pointer";
+        taskItem.style.marginBottom = "5px";
+        taskItem.style.color = "#000000";
+
+        // Strike-through on click
+        taskItem.addEventListener("click", () => {
+            if (taskItem.style.textDecoration !== "line-through") {
+                taskItem.style.textDecoration = "line-through";
+                taskItem.style.color = "#888";
+                checkTaskCompletion();
+            }
+        });
+
+        taskList.appendChild(taskItem);
+        taskInput.value = "";
+    }
+});
+
+// Rocket movement
+let currentPosition = 0;
+const milestones = [earth, meteor1, meteor2, star];
+let completedTasks = 0;
+
+function checkTaskCompletion() {
+    completedTasks++;
+    if (completedTasks <= taskList.children.length) {
+        moveRocketStep();
+    }
+    if (completedTasks === taskList.children.length) {
+        setTimeout(() => {
+            moveToNextMilestone();
+        }, 500);
+    }
+}
+
+function moveRocketStep() {
+    const distance = (100 / taskList.children.length) * completedTasks;
+    rocket.style.transition = "left 0.5s, top 0.5s";
+    const newLeft = `${50 + distance}px`;
+    rocket.style.left = newLeft;
+}
+
+function moveToNextMilestone() {
+    if (currentPosition < milestones.length - 1) {
+        currentPosition++;
+        const nextMilestone = milestones[currentPosition];
+        const rect = nextMilestone.getBoundingClientRect();
+        rocket.style.transition = "left 1s, top 1s";
+        rocket.style.left = `${rect.left + rect.width / 2 - 20}px`;
+        rocket.style.top = `${rect.top + rect.height / 2 - 40}px`;
+    }
+}
+
+</script>
+
+<article ondblclick="sandbox.toggleEditor(0)" style="display:flex" id="result0"><p class="status" id="status0"></p> <div class="output" id="output0"></div></article></div></body></html>

@@ -1,0 +1,141 @@
+<html>
+<head>
+<link rel='stylesheet' href='https://app.scribbler.live/codemirror/codemirror.css'>
+<link rel='stylesheet' href='https://app.scribbler.live/codemirror/cobalt.css'>
+<link rel='stylesheet' href='https://app.scribbler.live/codemirror/duotone-light.css'>
+<link rel='stylesheet' href='https://app.scribbler.live/codemirror/show-hint.css'>
+<link rel='stylesheet' href='https://app.scribbler.live/css/pico.min.css'>
+<link rel='stylesheet' href='https://app.scribbler.live/css/style.css'>
+<title>New JSNB:Scribbler Notebook</title>
+</head>
+<body>
+<br>
+<div class="container">
+
+<script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Productivity Feedback</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f4f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      text-align: center;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>How was your day?</h2>
+  <form id="feedbackForm">
+    <label for="dayFeedback">Overall, how was your day?</label>
+    <input type="text" id="dayFeedback" placeholder="Enter your feedback...">
+
+    <label for="productiveFeedback">Did you feel productive?</label>
+    <input type="text" id="productiveFeedback" placeholder="Yes/No, why?">
+
+    <label for="tasksCompleted">Were you able to complete all tasks?</label>
+    <input type="text" id="tasksCompleted" placeholder="Yes/No, what tasks?">
+
+    <label for="hindrances">If not, what were the hindrances you faced?</label>
+    <input type="text" id="hindrances" placeholder="Explain briefly">
+
+    <button type="button" id="submitButton">Submit</button>
+  </form>
+
+  <div id="responseMessage" style="display:none; margin-top:20px;">
+    <h3 id="feedbackMessage"></h3>
+    <div id="scheduleDiv" style="display:none;">
+      <h4>Here's your schedule:</h4>
+      <p id="scheduleText"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('submitButton').addEventListener('click', function() {
+    const dayFeedback = document.getElementById('dayFeedback').value.toLowerCase();
+    const productiveFeedback = document.getElementById('productiveFeedback').value.toLowerCase();
+    const tasksCompleted = document.getElementById('tasksCompleted').value.toLowerCase();
+    const hindrances = document.getElementById('hindrances').value.toLowerCase();
+
+    const feedbackMessage = document.getElementById('feedbackMessage');
+    const scheduleDiv = document.getElementById('scheduleDiv');
+    const scheduleText = document.getElementById('scheduleText');
+
+    let responseText = "";
+    let schedule = "";
+
+    // Check for positive feedback
+    if (productiveFeedback.includes("yes") && tasksCompleted.includes("yes")) {
+      responseText = "Great job! You've had a productive day. Keep up the amazing work!";
+    } 
+    // Check for minor negative feedback
+    else if (productiveFeedback.includes("no") || tasksCompleted.includes("no")) {
+      responseText = "It seems like things were a bit tough today. Mental and physical health plays an important role in productivity.";
+      responseText += " These challenges might be due to lack of nutrition, sleep, or water intake. Let's make a schedule to help you plan better!";
+      
+      schedule = generateSchedule();
+      scheduleDiv.style.display = "block";
+      scheduleText.textContent = schedule;
+    } 
+    // Check for serious negative feedback
+    else if (hindrances.includes("stress") || hindrances.includes("unmotivated") || hindrances.includes("feeling down")) {
+      responseText = "We care about you. Since you're going through a tough time, we recommend consulting a psychologist. Your mental health matters!";
+      responseText += " Remember, you're not alone, and help is available.";
+    }
+
+    feedbackMessage.textContent = responseText;
+    document.getElementById('responseMessage').style.display = "block";
+  });
+
+  function generateSchedule() {
+    return `
+      1. Morning: Drink a glass of water, do some light exercise (20 min)
+      2. Breakfast: Nutritious food (eggs, fruits, oats)
+      3. Mid-morning: 15 min break, stretch or walk
+      4. Lunch: Balanced meal (protein, vegetables, carbs)
+      5. Afternoon: Deep work (1.5-2 hours)
+      6. Evening: Take a break and relax, do something enjoyable
+      7. Dinner: Light, healthy meal (salad, protein)
+      8. Night: Sleep at least 7 hours for optimal rest
+    `;
+  }
+</script>
+
+</body>
+</html>
+</script>
+
+<article ondblclick="sandbox.toggleEditor(0)" style="display:flex" id="result0"><p class="status" id="status0"></p> <div class="output" id="output0"></div></article></div></body></html>
